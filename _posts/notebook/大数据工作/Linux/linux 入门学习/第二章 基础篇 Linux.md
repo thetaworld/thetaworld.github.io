@@ -1,0 +1,376 @@
+## 1. Linux 目录介绍
+ - Linux的目录结构
+    	- Linux一切皆文件
+    	- 具体的目录结构
+    		- /bin (/usr/bin、/usr/local/bin) 常用的命令
+    		- /sbin(/usr/sbin、/usr/local/sbin) 系统管理员使用的系统管理程序
+    		- /home
+    		- /root  该目录是系统管理员,也被称作超级权限用户的主目录
+    		- /boot 存放启动Linux时的一些核心文件，包括一些连接文件和镜像文件
+    		- /srv service 缩写，该目录存放一些服务启动之后需要提取的数据
+    		- /proc 这个目录是一个虚拟目录，它是系统内存的映射，这个目录来获取系统信息。
+    		- / tmp 
+    		- /dev 把所有的硬件用文件的形式存储
+    		- /media Linux系统自动识别一些设备，例如U盘、光驱等等，当识别后，Linux会把设备挂载到这个目录下。
+    		- /mnt 系统提供该目录是让用户临时挂载别的文件系统
+    		- /opt 额外安装软件的所摆放的目录
+    		- /usr/local 另一个额外安装软件的所摆放的目录。一般是通过编译源码的方式安转的程序
+    		- /var 这个存放着不断扩张的东西
+    		- /selinux 安全子系统，他能控制程序只访问特定文件
+## 2.VIM编辑器
+   - vi /vim 编辑器
+	   	- 一般模式快捷键
+	   		- yy 复制光标当前一行
+	   		- y数字y  复制一段
+	   		- p 箭头移动到目标行粘贴
+	   		- dd 删除目标当前行
+	   		- d数字d 删除光标含后多少行
+	   		- x 删除一个字母
+	   		- X 相当于Backspace
+	   		- yw 复制一个单词
+	   		- dw 删除一个单词
+	   		- shift+4 移动到行尾
+	   		- shift+6 移动到行头
+	   		- n+shift+g 移动到第n行
+	   	- 插入模式快捷键
+	   		- 进入编辑模式
+	   			- i 当前光标前
+	   			- a 当前光标后
+	   			- o 当前光标下一行
+	   	- 命令模式快捷键 
+	   		- ： w  q  ！
+	   		- / ? 查找  n shift+n 改变查找的方向
+## 3. 开关机/用户管理
+   - 开机、重启和用户注销
+    	- shutdow
+    		- shutdown -h now 立即关机
+    		- showdown -h 1  表示一分钟后关机
+    		- showndown -r now 立即重启
+    		- halt  关机
+    		- reboot 重启
+    		- sync：把内存数据同步到磁盘，关机或者重启前都应该把内存数据写入磁盘，防止数据丢失
+    - 用户管理 
+    	- 用户注销
+    		- su 用户名 切换用户
+    		- logout 注销用户 在level3运行级别有效
+    		-  用户管理
+    			- linux 系统是一个多用户多任务的操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后这个身份进入系统。
+    			- Linux 的用户 至少属于一个组
+    	- 添加用户
+    		- useradd [选项] 用户名
+    		- 给用户指定或者修改密码
+    			- passwd 用户名
+    	- 删除用户
+    		- userdel 
+    		- userdel xm 保留家目录
+    		- userdel -r xm 不保留家目录
+    	- 查询用户信息
+    		- id 用户名
+    	- 切换用户
+    		- su 用户名 		-权限高的用户到权限低的用户 不需要输入密码，反之，需要。
+    		- exit 返回原来的用户
+    	- 用户组
+    		- groupadd 组名  		-groupdel 组名
+    	- 添加用户时上组
+    		- useradd -g 组名 用户名
+    	- 修改用户组
+    		- usermod -g 用户组 用户名
+    	- 相关配置文件
+    		- /etc/shadow
+    		- /etc/group
+    		- /etc/passwd
+## 4.实用指令
+   - 指定用户运行级别
+   		- 运行级别的说明
+   			- 0 ：关机
+   			- 1：单用户 ，可以用于找回密码
+   			- 2：多用户状态没有网络
+   			- 3：多用户状态有网络
+   			- 4：系统保留，未使用
+   			- 5：图形界面
+   			- 6：系统启动 		-通过改文件 
+   			- ==/etc/inittab id:5:initdefault: ==这一行数字
+   	- 帮助 命令
+   		- man 
+   		- help help 比较简短
+   		- 百度
+   	- 文件目录类
+   		- pwd
+   		- ls [选项] 【目录或者文件】
+   		- cd
+   		- mkdir 【选项】要创建的目录
+   			- ==-p== 创建多级目录
+   		- rmdir 删除空目录
+   		-  touch 创建空文件夹
+   		- cp  -r  递归复制整个文件夹
+   			- \cp 强制覆盖不提示的方法
+   		- rm 指令移除【删除】文件或目录
+   			-  -r 递归删除整个文件夹
+   			-  -f 强制删除不提示
+   		- mv 移动文件与目录或者重命名
+   			- mv oldNameFile newNameFIle 重命名
+   			- mv /temp/movefile /targetFolder 移动文件
+   		- cat 查看文件的内容
+   			- n 显示行号
+   			-  | more 管道命令 分页浏览
+   		- more 
+   			- 按页显示文本文件内容
+   				- space 一页
+   				- enter 一行
+   				- q 不在显示该文件内容
+   				- Ctrl+F 向下滚动一屏
+   				- Ctrl +B 返回上一屏
+   				- = 输出当前行号
+   				- ：f 输出文件名和当前行号
+   		- less 与 more 类似 比more强大
+   			- 空白键 向下翻动一页
+   			- pagedown 向下翻一页
+   			- pageup 向上翻一页
+   			- / 子串 向下查找字符串
+   			- ？字串 向上查找字串的功能
+   			- q 离开less程序
+   		- \>  >>
+   			- 输出重定向
+   			- \> 会将原文件的内容覆盖
+   			- \>> 追加到文件的尾部
+   		- echo  输出内容到控制台
+   		- head 显示文件开头的部分
+   		-  tail 输出文件尾部的内容
+   			- tail 文件 后10行
+   			- tail - n  5 文件 后5行
+   			-  tail -f 文件 实时该文档所有更新，工作经常使用
+   		- ln 软连接 类似于windows里面快捷方式
+   			- ln -s 【原文件或者目录】 【软连接名】
+   		- history指令
+   			- 查看自己执行的历史指令
+   			- 执行编号为 178 的指令
+   			- ！178
+   - 时间日期类
+	   	- date 显示当前时间
+	   	- date+%Y 显示当前年份
+	   	- date+%m 显示当前月份
+	   	- date+%d 显示当前哪一天
+	   	- date "+%Y-%m-%d %H:%M:%S" 
+	   	- date 设置时间
+	   		- date -s 字符串时间
+	   	- cal 查看日历指令 
+   - 搜索查找类
+	   	- find 【搜索范围】【选项】
+	   		-  -name<查找方式>
+	   		-  -user<用户名> 查找属于指定用户名的所有文件
+	   		- size <文件大小> 按照指定文件大小查找文件
+	   			- find  /home -name hello.txt
+	   			- find /opt -user nobady
+	   			- find / -size +20M
+	   				-  +n 大于
+	   				-  -n 小于
+	   				-  n 等于
+	   	- locate 指令
+	   		- 快速定位文件路径
+	   		- lacate 文件
+	   		- 第一次运行前： 必须使用 updatedb指令创建创建locate数据库
+	   	- grep 指令和管道符号 |
+	   		- | 将前一个指令处理的结果传递给后面的命令处理
+	   		- grep 过滤查找
+	   			- grep 【选项】查找内容 源文件
+	   			- -n 显示匹配行和行号
+	   			-  -i 忽略字母大小写
+   - 压缩和解压缩
+	   	- gzip 用于压缩文件
+	   	- gunzip 用于解压缩 
+	   		- gunzip 文件.gz
+	   	- zip
+	   		- zip [选项]XXX.zip 
+	   		- unzip [选项]XXX.zip
+	   			-  -r 递归压缩 即压缩目录
+	   			-  -d <目录> 指定压缩文件存放的目录
+	   	- tar 指令
+	   		- tar 【选项】XXX.tar.gz 打包的内容
+	   			- -c 产生 .tar打包文件
+	   			-  -v 显示详细信息
+	   			- -f 指定压缩后的文件名
+	   			- -z打包同时压缩
+	   			- -x 解压.tar文件
+	   			- -C 解压到指定目录
+## 5 . 组管理和权限管理
+   - ==其他组== 除了文件所有者和所在组的用户外，系统的其他用户都是文件的其他组
+   	-  chown 用户名 文件名 ==修改文件所有者==
+   	-  groupadd 组名 ==创建一个组==
+   	- useradd -g 组名 用户名 ==创建一个用户==
+   	- chgrp 组名 文件名 ==修改文件所在组==
+   	- usermod -g 组名 用户名 ==修改用户所在的组==
+   	- usermod -d 目录名 用户名 ==改变该用户登录的初始目录。==
+   	- chmod  ==修改文件的权限==
+   	- 权限的基本介绍：
+   		- 0-9 位说明：
+   			- 0 位 确定文件类型 （d,-,c,b）
+   			- 第1-3 位确定所有者拥有该文件的权限。 --User
+   			- 第4-6 位确定所属组拥有该权限的。-- Group
+   			- 第7-9 位确定其他用户拥有的该文件的群贤 --Other
+   	- rwx 权限详解
+   		- rwx 作用到文件
+   			- 1) [ r ]代表可读(read): 可以读取,查看
+   			-  2) [ w ]代表可写(write): 可以修改,但是不代表可以删除该文件,删除一个文件的前提条件是对该 ==文件所在的目录有写权限，才能删除该文件.== 
+   			- 3) [ x ]代表可执行(execute):可以被执行
+   		- rwx 作用到目录
+   		- 1) [ r ]代表可读(read): 可以读取，ls 查看目录内容 
+   		- 2) [ w ]代表可写(write): 可以修改,==目录内创建+删除+重命名目录== 
+   		- 3) [ x ]代表可执行(execute):==可以进入该目录==
+   	- 修改权限-第一种方式
+   		- u：所有者 o: 其他人 a ：所有人 o：其他人
+   		- chmod u=rwx g=rx o=x 
+   		- chmod o+x 文件目录名
+   		- chmod a-x 文件目录名
+   	- 修改权限- 第二种方式
+   		- r=4 w=2 x=1
+   	- 修改文件所有者：
+   		- chown newowner file 改变文件所有者
+   		- chown newowner:newgroup file 改变用户所有者和所在组
+   		-  -R 如果是目录 则将其下所有文件的子文件或者目录递归生效
+   	- 改变文件所在组
+   		- chgrp newgroup file 改变文件的所在组
+## 6. 任务调度、linux磁盘管理
+   - 是指系统在某个特定的时间执行特定的命令或者程序
+   	- 系统工作：有些最要的工作必须周而复始地执行。如病毒扫描
+   	- 个别用户的操作：个别用户需要执行某些程序
+   	- crontab 【选项】
+   		- e 编辑crontab定时任务
+   		- l 查询crontab任务
+   		- r 删除当前用户所有的crontab任务
+   - Linux 磁盘分区、挂载
+   	- Linux 来说无论有几个分区，分给哪一个目录使用，它归根揭底就只有一个根目录，一个独立且唯一的文件结构，linux中每个分区用来组成文件系统的一部分。
+   	- linux采用一种“载入”的处理的方法，它的整个文件系统中包含一整套的文件与目录，且将一个分区和一个目录联系起来。这时要载入的一个分区将使它存储空间在一个目录下获得。
+   - 硬盘说明：
+   	- SCSI硬盘则标识为sdx --，sd表示设备的类型，x 表示盘号，（a为基本盘，b是基本从属盘，c为辅助主盘，d为辅助从属盘），--
+   代表分区，前四个分区用书数字1-4表示，他们表示主分区或者扩展分区，从第5个开始就是逻辑分区。
+   	- lsblk 查看当前系统的分区情况
+   	- ==学会挂载新的硬盘==
+   		- 分区 fdisk /dev/sdb
+   		- 格式化 mkfs -t ext4 /dev/sdb1
+   		- 挂载 mount /dev/sdb1 /home/newdisk
+   		- 设置永久挂载 
+   			- vim /etc/fstab
+   			- /dev/sdb1 /home/newdisk  ext4 defaults  00
+   		- du 查看目录占用情况
+## 6.进程管理
+   - 每一个进程都对应一个父进程，而这个父进程可以复制多个子进程。
+ 	- 进程包括前台进程和后台进程
+ 	- 一般系统服务都是以后台进程的方式存在，而且常驻在系统中。直到关机才结束。
+ 	- 显示系统执行的进程
+ 		- ps 
+ 			- PID 进程识别号
+ 			- TTY 终端机号
+ 			- TIME 此进程所消CPU的时间
+ 			- CMID 正在执行的命令或者进程名
+ 			- ps -aux
+ 				- a 显示当前终端的所有进程的信息
+ 				- u 以用户的格式显示进程的信息
+ 				- x 显示后台运行的参数  	 ![进程](https://lh3.googleusercontent.com/Jj7ANxxEIjfSRNyDnvLq3oPYNZY-YgaKyA3VizMQsMk_NtpOr7RamDMFvyUmt1eqcLmpryBkN8nB
+ "进程")
+ 		- •System V 展示风格 
+ 		- •USER：用户名称 
+ 		- •PID：进程号 •%CPU：进程占用 CPU 的百分比 
+ 		- •%MEM：进程占用物理内存的百分比 •VSZ：进程占用的虚拟内存大小（单位：KB） •RSS：进程占用的物理内存大小（单位：KB） •
+ 		- TT：终端名称,缩写 . 
+ 		- •STAT：进程状态，其中 S-睡眠，s-表示该进程是会话的先导进程，N-表示进程拥有比普通优先 级更低的优先级，R-正在运行，D-短期等待，Z-僵死进程，T-被跟踪或者被停止等等 
+ 		- •STARTED：进程的启动时间 
+ 		- •TIME：CPU 时间，即进程使用 CPU 的总时间 
+ 		- •COMMAND：启动进程所用的命令和参数，如果过长会被截断显示
+ 	- ps -ef |more 
+ 		- 以全格式显示当前所有的进程
+ 		- -e 显示所有进程 -f 全格式
+ 		- 是BSD 风格
+ 		- UID 用户ID
+ 		- PID 进程ID
+ 		- PPID 父进程ID
+ 		- C CPU 用于计算执行的优先级因子。数值越大，执行优先级会降低
+ 		- STIME： 进程启动的时间
+ 		- TTY ：完整终端的名字
+ 		- TIME ：CPU时间
+ 		- CMD：启动进程的所用的命令和参数
+ 	- 终止进程
+ 		- kill  和killall
+ 		-  kill 【选项】进程号
+ 		- killall 进程号
+ 		- 常用选项：-9 强迫进程立即停止
+ 	- 查看进程树
+ 		- pstree【选项】
+ 		- p 显示进程的PID
+ 		- u 显示用户的所属的用户
+ 	- 服务管理
+ 		- 一般运行在后台，通常都会监听某个端口，等待其他程序的请求，比如（mysql,sshd,防火墙等）因此被称为守护进程
+ 		- service 服务名 start|stop|restart|reload|status
+ 		- 查看服务名：ls -l /etc/init.d
+ 		- 服务运行的级别
+ 			- 查看或者修改默认级别： vi /etc/inittab 
+ 			- Linux 系统有 7 种运行级别(runlevel)：常用的是级别 3 和 5 
+ 			- •运行级别 0：系统停机状态，系统默认运行级别不能设为 0，否则不能正常启动 
+ 			- •运行级别 1：单用户工作状态，root 权限，用于系统维护，禁止远程登陆 
+ 			- •运行级别 2：多用户状态(没有 NFS)，不支持网络 
+ 			- •运行级别 3：完全的多用户状态(有 NFS)，登陆后进入控制台命令行模式 
+ 			- •运行级别 4：系统未使用，保留
+ 			-  •运行级别 5：X11 控制台，登陆后进入图形 GUI 模式
+ 			-  •运行级别 6：系统正常关闭并重启，默认运行级别不能设为 6，否则不能正常启动
+ 		- chkconfig 指令
+ 			- 通过 chkconfig 命令可以给每个服务的各个运行级别设置自启动/关闭
+ 			- chkconfig --list|grep xxx
+ 			- chkconfig iptables --list
+ 			- chkconfig [--level 5] 服务名 on/off
+ 		- top 动态监视进程
+ 			- - d秒数
+ 			- -i 不显示任何闲置或者僵尸进程
+ 			- -p 通过制定制定监控进程ID来仅仅监控某个进程的状态
+ 			- 交互操作说明：
+ 				- P  
+ 				- M
+ 				- N
+ 				- q 退出top
+ 		- netstat
+ 			-  查看系统网络的情况netstat
+ 			- netstat -anp
+ 			- -an 按一定顺序排列输出
+ 			- -p 显示哪个进程在调用
+## 7. RPM和YUM
+   - 查询已安装的 rpm 列表 rpm –qa|grep xx
+   	- rpm 包名基本格式
+   		- 一个 rpm 包名：firefox-45.0.1-1.el6.centos.x86_64.rpm 
+   		- 名称:firefox 版本号：45.0.1-1 尚硅谷 Linux 课程 
+   		- 适用操作系统: el6.centos.x86_64 表示 centos6.x 的 64 位系统 如果是 i686、i386 表示 32 位系统，noarch 表示通用
+   		- 	rpm -q 软件包名 :查询软件包是否安装 
+   		- rpm -qi 软件包名 ：查询软件包信息
+   		-  rpm -ql 软件包名 :查询软件包中的文件
+   		-  rpm -e RPM 包的名称
+   		- rpm -e --nodeps foo --nodeps 就是强制删除
+   		- 安装RPM
+   			- rpm -ivh RPM 包全路径名称 
+   			- •参数说明 
+   				- i=install 安装 
+   				- v=verbose 提示 
+   				- h=hash 进度条
+   	- YUM
+   		- 基于 RPM 包管理，能够从指定的服务器自动下载 RPM 包 并且安装，可以自动处理依赖性关系，
+   		- 并且一次安装所有依赖的软件包。
+   		- 使用 yum 的前提是可以联 网。
+   		-   查询 yum 服务器是否有需要安装的软件
+   			-  	yum list|grep xx 软件列表 
+   		- 安装指定的 yum 包 
+   			- yum install xxx 下载安装 
+## 8.Shell 编程 
+- 编写Shell进行服务器的管理
+- shell程序来管理服务器集群
+- shell是一个命令行解释器，它为用户提供了一个向Linux内核发送清求以便运行程序的界面系统级程序，用户可以用shell启动、挂起、停止甚至编写一些程序。
+- 脚本以#!/bin/bash 开头
+- 脚本需要执行权限
+- sh +脚本 可以直接执行
+- shell 的变量
+	- 未完待续
+
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTk0NTM1NDA5NSwtNzMzMjgzMjA1LC0xOT
+U1OTAwMzA2LC0xNzkwNzA0MjU5LDEwNDQ0MTc2MTQsLTE0MDQy
+MjgyNzgsLTE3NzcyMjQzMzEsMTU2NDkxNjEzNSwxMDIwNTk4NT
+M3LDE3MjQ0MzA2MSwxNjg0Njk3ODg5LC0xMzM5NjExMTQ2LC0x
+MTIyOTUzNTMyLDE5NTgwMzAwLC0xMDU0MjAwNjA3LC0yMTI5MT
+IyOTM3LDMwMTA0NjMzMSwxMDYxOTE0NzY1LDE1NDE1NDYxMTIs
+MTUwMjExOTIxMV19
+-->
